@@ -13,6 +13,9 @@ import Image
 import glob
 import os
 
+import ImageFile
+ImageFile.MAXBLOCK = 1024*1024 # default is 64k
+
 class ImageSizerPlugin(Plugin):
     """
     Each HTML page is modified to add width and height for images if
@@ -221,8 +224,10 @@ class ImageThumbnailsPlugin(Plugin):
             resize_width = im.size[0]*height/im.size[1]
         else:
             resize_height = im.size[1]*width/im.size[0]
-
-        im = im.resize((resize_width, resize_height), Image.ANTIALIAS)
+        if(im.size[0] > resize_width and im.size[1] > resize_height):
+            im = im.resize((resize_width, resize_height), Image.ANTIALIAS)
+        else:
+            self.logger.debug("Skipping resize to avoid enlargement for [%s]" % resource)
         if width is not None and height is not None:
             shiftx = shifty = 0
             if crop_type == "center":
