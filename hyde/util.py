@@ -21,7 +21,7 @@ except:
 
 def getLoggerWithConsoleHandler(logger_name):
     logger = logging.getLogger(logger_name)
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.DEBUG)
     if not logger.handlers:
         handler = logging.StreamHandler(sys.stdout)
         if sys.platform == 'win32':
