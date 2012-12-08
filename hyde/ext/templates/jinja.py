@@ -119,6 +119,7 @@ def asciidoc(env, value):
     asciidoc.execute(StringIO.StringIO(output.encode('utf-8')), result, backend='html4')
     return unicode(result.getvalue(), "utf-8")
 
+
 @environmentfilter
 def markdown(env, value):
     """

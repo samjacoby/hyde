@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Contains classes and utilities to extract information from git repository
 """
@@ -7,6 +6,7 @@ from hyde.plugin import Plugin
 
 import subprocess
 import traceback
+
 from dateutil.parser import parse
 
 class GitDatesPlugin(Plugin):
@@ -29,16 +29,20 @@ class GitDatesPlugin(Plugin):
                 modified = None
                 try:
                     created = resource.meta.created
+                except AttributeError:
+                    pass
+                try:
                     modified = resource.meta.modified
                 except AttributeError:
                     pass
                 # Everything is already overrided
-                if created != "git" and modified != "git":
+                if created != "git" or modified != "git":
                     continue
                 # Run git log --pretty=%ai
                 try:
                     commits = subprocess.check_output(["git", "log", "--pretty=%ai",
                                                        resource.path]).split("\n")
+
                 except subprocess.CalledProcessError:
                     self.logger.warning("Unable to get git history for [%s]" % resource)
                     continue
