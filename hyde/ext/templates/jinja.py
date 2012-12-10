@@ -81,7 +81,7 @@ def date_format(ctx, dt, fmt=None):
         global_format = ctx.resolve('dateformat')
         if not isinstance(global_format, Undefined):
             format = global_format
-    return dt.strftime(format)
+    return re.sub(r"\b0", "", dt.strftime(format))
 
 
 def islice(iterable, start=0, stop=3, step=1):
