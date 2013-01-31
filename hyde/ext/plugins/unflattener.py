@@ -29,18 +29,14 @@ class UnflattenerPlugin(Plugin):
         except AttributeError:
             pass
 
-        self.logger.debug("BAM")
         self.logger.debug(items)
         for item in items:
-            self.logger.debug("OK")
             self.logger.debug(item)
             node = None
             target = ''
             try:
                 node = self.site.content.node_from_relative_path(item)
-                self.logger.debug("ROK")
             except AttributeError:
-                self.logger.debug("NOK")
                 continue
             if node:
                 for resource in node.walk_resources():
