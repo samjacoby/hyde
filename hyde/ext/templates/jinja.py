@@ -93,6 +93,8 @@ def top(iterable, count=3):
 def xmldatetime(dt):
     if not dt:
         dt = datetime.now()
+    logger.error("BANG")
+    logger.info(dt)
     zprefix = "Z"
     tz = dt.strftime("%z")
     if tz:
